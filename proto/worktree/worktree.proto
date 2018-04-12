@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package proto;
+
+message SaveReq {
+}
+
+message SaveResp {
+}
+
+service WorktreeService {
+    rpc Save(SaveReq) returns (SaveResp) {
+    }
+}

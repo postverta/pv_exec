@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package proto;
+
+message KeyValuePair {
+    string key = 1;
+    string value = 2;
+}
+
+message ConfigureProcessReq {
+    string process_name = 1;
+    repeated string start_cmd = 2;
+    string run_path = 3;
+    bool enabled = 4;
+    uint32 listening_port = 5;
+
+    repeated KeyValuePair env_vars = 6;
+}
+
+message ConfigureProcessResp {
+}
+
+message RestartProcessReq {
+    string process_name = 1;
+    repeated string start_cmd = 2;
+
+    repeated KeyValuePair env_vars = 3;
+}
+
+message RestartProcessResp {
+}
+
+message GetProcessStateReq {
+    string process_name = 1;
+}
+
+enum ProcessState {
+    NOT_RUNNING = 0;
+    STARTING = 1;
+    RUNNING = 2;
+    FINISHED = 3;
+}
+
+message GetProcessStateResp {
+    ProcessState process_state = 1;
+}
+
+service ProcessService {
+    rpc ConfigureProcess(ConfigureProcessReq) returns (ConfigureProcessResp) {
+    }
+    rpc RestartProcess(RestartProcessReq) returns (RestartProcessResp) {
+    }
+    rpc GetProcessState(GetProcessStateReq) returns (GetProcessStateResp) {
+    }
+}

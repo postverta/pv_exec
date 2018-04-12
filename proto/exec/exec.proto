@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package proto;
+
+message ExecReq {
+    string task_name = 1;
+
+    message KeyValuePair {
+        string key = 1;
+        string value = 2;
+    }
+
+    repeated KeyValuePair key_values = 2;
+    bytes data = 3;
+    bool wait_for_completion = 4;
+}
+
+message ExecResp {
+    bool completed = 1;
+    bytes data = 2;
+}
+
+service ExecService {
+    rpc Exec(ExecReq) returns (ExecResp) {
+    }
+}
